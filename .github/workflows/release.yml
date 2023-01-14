@@ -2,8 +2,10 @@ name: Release Build
 
 on:
   push:
-    branches:
+    branches: 
       - master
+  # 手动触发
+  workflow_dispatch:
 
 jobs:
   build-release:
