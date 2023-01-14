@@ -3,7 +3,7 @@ name: Release Build
 on:
   push:
     branches: 
-      - master
+      - develop
   # 手动触发
   workflow_dispatch:
 
