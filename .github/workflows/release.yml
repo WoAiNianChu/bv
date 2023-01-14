@@ -19,10 +19,6 @@ jobs:
           ref: develop
           fetch-depth: 0
 
-      - name: Write google-services.json
-        env:
-          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: echo $DATA > app/google-services.json
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
