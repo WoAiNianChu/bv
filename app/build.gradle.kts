@@ -6,7 +6,6 @@ import java.util.*
 plugins {
     alias(gradleLibs.plugins.android.application)
     alias(gradleLibs.plugins.firebase.crashlytics)
-    alias(gradleLibs.plugins.google.services)
     alias(gradleLibs.plugins.kotlin.android)
     alias(gradleLibs.plugins.kotlin.serialization)
 }
