@@ -5,7 +5,7 @@ on:
     branches: 
       - develop
   # 手动触发
-  workflow_dispatch:
+
 
 jobs:
   build-release:
@@ -16,16 +16,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: develop
+          ref: master
           fetch-depth: 0
 
+      - name: Write google-services.json
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA > app/google-services.json
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-  # 构建app
-      - name: Build app
-        run: bash ./gradlew assembleRelease
+      - name: Add signing properties
+        env:
+          SIGNING_PROPERTIES: ${{ secrets.SIGNING_PROPERTIES }}
+        run: |
+          echo ${{ secrets.SIGNING_PROPERTIES }} > encoded_signing_properties
+          base64 -d encoded_signing_properties > signing.properties
+
+      - name: Add jks file
+        run: |
+          echo ${{ secrets.SIGN_KEY }} > ./encoded_key
+          base64 -d encoded_key > key.jks
+
+      - name: Build APK
+        run: ./gradlew assembleRelease
+
 
   #发布构建的app
       - name: Upload built apk
